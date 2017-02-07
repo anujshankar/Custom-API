@@ -1,0 +1,20 @@
+<html>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+<body>
+  <div id='result'></div>
+</body>
+
+<script>
+  $.get("http://localhost:3000/read", function (data) {
+    var result = '';
+    for (let iter = 0; iter < data.length; iter++) {
+      result += `<li> ${data[iter].description} </li>`
+    }
+    $("#result").html((result))
+    console.log(result)
+  });
+</script>
+
+</html>
