@@ -1,31 +1,62 @@
+/*eslint-disable*/
+// escape data for avoiding XSS attacks.
+
 function read() {
   $.get("/read", function (data) {
     let result = ''
-    console.log(data)
     for (let iter = 0; iter < data.length; iter++) {
-      result += `<li>${data[iter].description}<button class='close' id=${data[iter].id}>x</button></li>` // Prone to XSS
+      result += `<li class="list-group-item" >
+                  <div class = "row-fluid">
+                  <input onclick="updateStatus(this.id,!${data[iter].status})
+                  " class = "note-check checkbox checkbox-primary" id = "${data[iter].id}" type="checkbox" ${data[iter].status === true ? "checked" : ''} > 
+                  <input id="${data[iter].id}" onblur="updateElement(this.id,this.value)" class = "col-sm-8 note-holder" value = "${data[iter].description}" /> 
+                  <button id=${data[iter].id} onClick="deleteElement(this.id)" class = "deleteButton col-sm-1">x</button> 
+                  </div>
+                  </li>`
     }
     $("#result").html((result))
-    $('button').click(function () {
-      $.ajax({
-        url: `/destroy/${this.id}`,
-        type: 'DELETE',
-        success: function (response) {
-          read()
-        }
-      })
-    })
+  })
+}
+
+function updateStatus(id, status) {
+  $.ajax({
+    data: `status=${status}`,
+    url: `/update/${id}`,
+    type: 'PUT',
+    success: function (response) {
+      read()
+    }
+  })
+}
+
+function updateElement(id, value) {
+  $.ajax({
+    data: `value=${value}`,
+    url: `/update/${id}`,
+    type: 'PUT',
+    success: function (response) {
+      read()
+    }
+  })
+}
+
+function deleteElement(id) {
+  $.ajax({
+    url: `/destroy/${id}`,
+    type: 'DELETE',
+    success: function (response) {
+      read()
+    }
+  })
+}
+
+function writeData() {
+  let data = $('#post-data').val()
+  $.post(`/write/${data}`, function (data) {
+    read()
   })
 }
 
 $(document).ready(function () {
   read()
 })
-
-`<li class="list-group-item" >
-            <div class = "row-fluid">
-              <input class = "note-check checkbox checkbox-primary" noteId = "${id}" type="checkbox" ${status === true ? "checked" : ''} > 
-              <input noteId = "${id}" class = "col-sm-8 note-holder" value = "${description}" /> 
-              <span noteId=${id} class = "deleteButton col-sm-1">:x:</span> 
-            </div>
-</li>`;

@@ -11,7 +11,11 @@ function insertInDB (insertString) {
 }
 
 function updateDB (id, description, status = false) {
-  return sequelize.query('UPDATE tasks SET DESCRIPTION = ?, STATUS = ? WHERE id = ?;', { replacements: [description, status, id] })
+  if (!description) {
+    return sequelize.query('UPDATE tasks SET STATUS = ? WHERE id = ?;', { replacements: [status, id] })
+  } else {
+    return sequelize.query('UPDATE tasks SET DESCRIPTION = ?, STATUS = ? WHERE id = ?;', { replacements: [description, status, id] })
+  }
 }
 
 function deleteFromDB (id) {

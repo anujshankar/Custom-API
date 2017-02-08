@@ -6,27 +6,17 @@
 
 <body>
   <ul id='result'></ul>
+
   <form>
     <input type="text" id="post-data" placeholder="Enter Data">
     <br><br>
-    <button id="post-button">Submit</button>
-  </form>
-
-  <form>
-    PUT Request: <br><br> Enter Line Number which has to be modified:
-    <input type="number" name="linenumber" value="0">
-    <br> Enter data:
-    <input type="text" name="data" value="Mouse">
-    <br><br>
-    <input type="submit" value="Submit">
+    <button id="post-button" onclick="writeData()">Submit</button>
   </form>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous">
     </script>
 <script src="/readDB.js"></script>
-<script src="/writeDB.js"></script>
-<script src="/main.js"></script>
 </body>
 
 </html>
