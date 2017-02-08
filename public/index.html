@@ -1,20 +1,30 @@
 <html>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
 
 <body>
-  <div id='result'></div>
-</body>
+  <ol id='result'></ol>
 
-<script>
-  $.get("http://localhost:3000/read", function (data) {
-    var result = '';
-    for (let iter = 0; iter < data.length; iter++) {
-      result += `<li> ${data[iter].description} </li>`
-    }
-    $("#result").html((result))
-    console.log(result)
-  });
-</script>
+  <form>
+    POST Request:<br><br>
+    <input type="text" id="post-data" value="lorem">
+    <br><br>
+    <button id="post-button">Submit</button>
+  </form>
+
+  <form>
+    PUT Request: <br><br> Enter Line Number which has to be modified:
+    <input type="number" name="linenumber" value="0">
+    <br> Enter data:
+    <input type="text" name="data" value="Mouse">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous">
+    </script>
+<script src="/readDB.js"></script>
+<script src="/writeDB.js"></script>
+<script src="/deleteItem.js"></script>
+</body>
 
 </html>
