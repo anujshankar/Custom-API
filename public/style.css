@@ -1,20 +1,11 @@
-body {
-  margin: 0;
-  min-width: 250px;
-}
+#post-data{
 
-/* Include the padding and border in an element's total width and height */
-* {
-  box-sizing: border-box;
 }
-
-/* Remove margins and padding from the list */
-ul {
-  margin: 0;
-  padding: 0;
-}
-
 /* Style the list items */
+ul {
+  list-style: none;
+}
+
 ul li {
   cursor: pointer;
   position: relative;
@@ -74,26 +65,9 @@ ul li.checked::before {
   color: white;
 }
 
-/* Style the header */
-.header {
-  background-color: #f44336;
-  padding: 30px 40px;
-  color: white;
-  text-align: center;
-}
-
-/* Clear floats after the header */
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 /* Style the input */
 input {
-  border: none;
   width: 75%;
-  padding: 10px;
   float: left;
   font-size: 16px;
 }
@@ -111,6 +85,18 @@ input {
   transition: 0.3s;
 }
 
-.addBtn:hover {
+#post-button:hover {
   background-color: #bbb;
+}
+
+#post-button{
+  padding: 10px;
+  width: 15%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
