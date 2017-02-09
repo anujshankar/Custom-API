@@ -5,11 +5,11 @@ function read() {
   $.get("/read", function (data) {
     let result = ''
     for (let iter = 0; iter < data.length; iter++) {
-      result += `<li class="list-group-item" >
-                  <div class = "row-fluid">
+      result += `<li>
+                  <div>
                   <input onclick="updateStatus(this.id,!${data[iter].status})
-                  " class = "note-check checkbox checkbox-primary" id = "${data[iter].id}-check" type="checkbox" ${data[iter].status === true ? "checked" : ''}> 
-                  <input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" class = "note-holder" value = "${data[iter].description}"/> 
+                  " id = "${data[iter].id}-check" type="checkbox" ${data[iter].status === true ? "checked" : ''}> 
+                  <input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" value = "${data[iter].description}"/> 
                   <button id="${data[iter].id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
                   </div>
                   </li>`
