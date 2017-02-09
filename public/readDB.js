@@ -18,24 +18,26 @@ function read() {
   })
 }
 
+
+
 function updateStatus(id, status) {
   const queryId = id.split('-')[0]
   const textboxId = queryId + '-text'
-  const myElement = document.getElementById(textboxId);
+  const checkId = queryId + '-check'
+  const myElement = document.getElementById(textboxId)
+  const checkElement = document.getElementById(checkId)
   $.ajax({
     data: `status=${status}`,
     url: `/update/${queryId}`,
     type: 'PUT',
     success: function (response) {
-      if (status) {
+      if (checkElement.checked) {
         myElement.style.textDecoration = "line-through";
       } else {
         myElement.style.textDecoration = "none";
       }
-      // read()
     }
   })
-
 }
 
 function updateElement(id, value) {
@@ -43,10 +45,7 @@ function updateElement(id, value) {
   $.ajax({
     data: `value=${value}`,
     url: `/update/${queryId}`,
-    type: 'PUT',
-    success: function (response) {
-      read()
-    }
+    type: 'PUT'
   })
 }
 
