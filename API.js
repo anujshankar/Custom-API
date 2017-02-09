@@ -20,8 +20,9 @@ app.get('/read', function (req, res) {
 app.post('/write/:data', function (req, res) {
   const stringToInsert = req.params.data
   crudops.insertInDB(stringToInsert)
-    .then(function () {
-      res.sendStatus(200)
+    .then(function (responseId) {
+      console.log('res: ', responseId[0].id)
+      res.status(200).send(responseId[0])
     })
     .catch(function () {
       res.sendStatus(500)

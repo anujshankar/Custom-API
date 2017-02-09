@@ -7,7 +7,7 @@ function readFromDB () {
 
 function insertInDB (insertString) {
   return sequelize.query(`INSERT INTO TASKS (DESCRIPTION)
-   VALUES(?)`, { replacements: [insertString] })
+   VALUES(?) RETURNING ID`, { replacements: [insertString] })
 }
 
 function updateDB (id, description, status = false) {

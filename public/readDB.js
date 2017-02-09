@@ -18,8 +18,6 @@ function read() {
   })
 }
 
-
-
 function updateStatus(id, status) {
   const queryId = id.split('-')[0]
   const textboxId = queryId + '-text'
@@ -60,12 +58,25 @@ function deleteElement(id) {
   })
 }
 
-function writeData() {
-  let data = $('#post-data').val()
-  $.post(`/write/${data}`, function (data) {
-    read()
+$("#writeForm").submit((e) => {
+  e.preventDefault();
+  let task = $('#post-data').val()
+  let submitButton = document.getElementById('post-data');
+  submitButton.value = ''
+  $.post(`/write/${task}`, function (data) {
+    return data
+  }).done(function (data) {
+    let taskData = `<li>
+                  <div>
+                  <input onclick="updateStatus(this.id,true)
+                  " id = "${data.id}-check" type="checkbox"}> 
+                  <input id="${data.id}-text" onblur="updateElement(this.id,this.value)" value = "${task}"/>
+                  <button id="${data.id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
+                  </div>
+                  </li>`
+    $("#result").append(taskData);
   })
-}
+})
 
 $(document).ready(function () {
   read()
