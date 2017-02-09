@@ -8,9 +8,9 @@ function read() {
       result += `<li class="list-group-item" >
                   <div class = "row-fluid">
                   <input onclick="updateStatus(this.id,!${data[iter].status})
-                  " class = "note-check checkbox checkbox-primary" id = "${data[iter].id}" type="checkbox" ${data[iter].status === true ? "checked" : ''} > 
-                  <input id="${data[iter].id}" onblur="updateElement(this.id,this.value)" class = "col-sm-8 note-holder" value = "${data[iter].description}" /> 
-                  <button id=${data[iter].id} onClick="deleteElement(this.id)" class = "deleteButton col-sm-1">x</button> 
+                  " class = "note-check checkbox checkbox-primary" id = "${data[iter].id}-check" type="checkbox" ${data[iter].status === true ? "checked" : ''}> 
+                  <input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" class = "note-holder" value = "${data[iter].description}"/> 
+                  <button id="${data[iter].id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
                   </div>
                   </li>`
     }
@@ -19,6 +19,11 @@ function read() {
 }
 
 function updateStatus(id, status) {
+  if (status) {
+    const newid = '#' + id.split('-')[0] + '-text'
+    const myElement = document.querySelector(newid);
+    myElement.style.backgroundColor = "#D93600";
+  }
   $.ajax({
     data: `status=${status}`,
     url: `/update/${id}`,

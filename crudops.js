@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const sequelize = new Sequelize('postgres://anujshankar:t7@localhost:5432/anujshankar')
 
 function readFromDB () {
-  return sequelize.query(`SELECT id,description,status FROM tasks`)
+  return sequelize.query(`SELECT id,description,status FROM tasks ORDER BY id`)
 }
 
 function insertInDB (insertString) {
