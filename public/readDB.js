@@ -1,15 +1,16 @@
 /*eslint-disable*/
 // escape data for avoiding XSS attacks.
-
 function read() {
   $.get("/read", function (data) {
     let result = ''
     for (let iter = 0; iter < data.length; iter++) {
+      let textbox = `<input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" value = "${data[iter].description}" ${data[iter].status === true ? "style=\"text-decoration:line-through\"" : "" }/>`
+
       result += `<li>
                   <div>
-                  <input onclick="updateStatus(this.id,!${data[iter].status})
+                  <input onclick="updateStatus(this.id)
                   " id = "${data[iter].id}-check" type="checkbox" ${data[iter].status === true ? "checked" : ''}> 
-                  <input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" value = "${data[iter].description}"/> 
+                  ${textbox}
                   <button id="${data[iter].id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
                   </div>
                   </li>`
@@ -17,24 +18,29 @@ function read() {
     $("#result").html((result))
   })
 }
-
-function updateStatus(id, status) {
+function strikeThrough(id){
   const queryId = id.split('-')[0]
   const textboxId = queryId + '-text'
   const checkId = queryId + '-check'
-  const myElement = document.getElementById(textboxId)
+  const textElement = document.getElementById(textboxId)
   const checkElement = document.getElementById(checkId)
+  if (checkElement.checked) {
+    textElement.style.textDecoration = "line-through";
+    status = true
+  } else {
+    textElement.style.textDecoration = "none";
+    status = false
+  }
+  return status
+}
+
+function updateStatus(id) {
+  const queryId = id.split('-')[0]
+  const status = strikeThrough(id)
   $.ajax({
     data: `status=${status}`,
     url: `/update/${queryId}`,
     type: 'PUT',
-    success: function (response) {
-      if (checkElement.checked) {
-        myElement.style.textDecoration = "line-through";
-      } else {
-        myElement.style.textDecoration = "none";
-      }
-    }
   })
 }
 
