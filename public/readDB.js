@@ -19,25 +19,30 @@ function read() {
 }
 
 function updateStatus(id, status) {
-  if (status) {
-    const newid = '#' + id.split('-')[0] + '-text'
-    const myElement = document.querySelector(newid);
-    myElement.style.backgroundColor = "#D93600";
-  }
+  const queryId = id.split('-')[0]
+  const textboxId = queryId + '-text'
+  const myElement = document.getElementById(textboxId);
   $.ajax({
     data: `status=${status}`,
-    url: `/update/${id}`,
+    url: `/update/${queryId}`,
     type: 'PUT',
     success: function (response) {
-      read()
+      if (status) {
+        myElement.style.textDecoration = "line-through";
+      } else {
+        myElement.style.textDecoration = "none";
+      }
+      // read()
     }
   })
+
 }
 
 function updateElement(id, value) {
+  const queryId = id.split('-')[0]
   $.ajax({
     data: `value=${value}`,
-    url: `/update/${id}`,
+    url: `/update/${queryId}`,
     type: 'PUT',
     success: function (response) {
       read()
@@ -46,8 +51,9 @@ function updateElement(id, value) {
 }
 
 function deleteElement(id) {
+  const queryId = id.split('-')[0]
   $.ajax({
-    url: `/destroy/${id}`,
+    url: `/destroy/${queryId}`,
     type: 'DELETE',
     success: function (response) {
       read()
