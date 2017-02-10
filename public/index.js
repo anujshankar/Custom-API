@@ -1,10 +1,18 @@
-/*eslint-disable*/
 // escape data for avoiding XSS attacks.
+/*eslint-disable*/
+
 function read() {
   $.get("/read", function (data) {
     let result = ''
     for (let iter = 0; iter < data.length; iter++) {
-      let textbox = `<input id="${data[iter].id}-text" onblur="updateElement(this.id,this.value)" value = "${data[iter].description}" ${data[iter].status === true ? "style=\"text-decoration:line-through\"" : "" }/>`
+      let textbox = `<input
+       id="${data[iter].id}-text"
+       onblur="updateElement(this.id,this.value)"
+       value = "${data[iter].description}"
+      ${data[iter].status === true ? "style=\"text-decoration:line-through\"" : ""}
+      readonly="true"
+      ondblclick="this.readOnly='';"
+      />`
 
       result += `<li>
                   <div>
@@ -46,6 +54,9 @@ function updateStatus(id) {
 
 function updateElement(id, value) {
   const queryId = id.split('-')[0]
+  const textboxId = queryId + '-text'
+  const textElement = document.getElementById(textboxId)
+  textElement.readOnly = true;
   $.ajax({
     data: `value=${value}`,
     url: `/update/${queryId}`,
