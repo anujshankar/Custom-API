@@ -50,9 +50,20 @@ ul {
 div {
     padding: 4%;
 }
+ 
+div:hover .deletebutton{
+  display: inline;
+}
 
 li {
     border-bottom: solid 1px #e6e6e6;
+}
+
+.deletebutton {
+    display: none;
+    border: none;
+    background: transparent;
+    color: red;
 }
 
 .info {

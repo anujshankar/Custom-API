@@ -5,31 +5,36 @@ function read() {
   $.get("/read", function (data) {
     let result = ''
     for (let iter = 0; iter < data.length; iter++) {
+      const id = data[iter].id
+      const description = data[iter].description
+      const status = data[iter].status
+
       let textbox = `<input
-       id="${data[iter].id}-text"
+       id="text-${id}"
        onblur="updateElement(this.id,this.value)"
-       value = "${data[iter].description}"
-      ${data[iter].status === true ? "style=\"text-decoration:line-through\"" : ""}
+       value="${description}"
+      ${status === true ? "style=\"text-decoration:line-through\"" : ""}
       readonly="true"
       ondblclick="this.readOnly='';"
       />`
-
-      result += `<li>
-                  <div>
+      let deleteButton = `<button id="button-${id}" onClick="deleteElement(this.id)" class="deleteButton">x</button>`
+      result += `<li id="list-${id}">
+                  <div id="div-${id}">
                   <input onclick="updateStatus(this.id)
-                  " id = "${data[iter].id}-check" type="checkbox" ${data[iter].status === true ? "checked" : ''}> 
+                  " id = "check-${id}" type="checkbox" ${status === true ? "checked" : ''}> 
                   ${textbox}
-                  <button id="${data[iter].id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
+                  ${deleteButton}
                   </div>
                   </li>`
     }
     $("#result").html((result))
   })
 }
-function strikeThrough(id){
-  const queryId = id.split('-')[0]
-  const textboxId = queryId + '-text'
-  const checkId = queryId + '-check'
+
+function strikeThrough(id) {
+  const queryId = id.split('-')[1]
+  const textboxId = 'text-' + queryId 
+  const checkId =  'check-' + queryId
   const textElement = document.getElementById(textboxId)
   const checkElement = document.getElementById(checkId)
   if (checkElement.checked) {
@@ -43,7 +48,7 @@ function strikeThrough(id){
 }
 
 function updateStatus(id) {
-  const queryId = id.split('-')[0]
+  const queryId = id.split('-')[1]
   const status = strikeThrough(id)
   $.ajax({
     data: `status=${status}`,
@@ -53,8 +58,8 @@ function updateStatus(id) {
 }
 
 function updateElement(id, value) {
-  const queryId = id.split('-')[0]
-  const textboxId = queryId + '-text'
+  const queryId = id.split('-')[1]
+  const textboxId = 'text-' + queryId
   const textElement = document.getElementById(textboxId)
   textElement.readOnly = true;
   $.ajax({
@@ -65,7 +70,7 @@ function updateElement(id, value) {
 }
 
 function deleteElement(id) {
-  const queryId = id.split('-')[0]
+  const queryId = id.split('-')[1]
   $.ajax({
     url: `/destroy/${queryId}`,
     type: 'DELETE',
@@ -81,14 +86,13 @@ $("#writeForm").submit((e) => {
   let submitButton = document.getElementById('post-data');
   submitButton.value = ''
   $.post(`/write/${task}`, function (data) {
-    return data
-  }).done(function (data) {
-    let taskData = `<li>
-                  <div>
+    const id = data.id
+    let taskData = `<li id="list-${id}">
+                  <div id="div-${id}">
                   <input onclick="updateStatus(this.id,true)
-                  " id = "${data.id}-check" type="checkbox"}> 
-                  <input id="${data.id}-text" onblur="updateElement(this.id,this.value)" value = "${task}"/>
-                  <button id="${data.id}-button" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
+                  " id="check-${id}" type="checkbox"}> 
+                  <input id="text-${id}" onblur="updateElement(this.id,this.value)" value="${task}"/>
+                  <button id="button-${id}" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
                   </div>
                   </li>`
     $("#result").append(taskData);
