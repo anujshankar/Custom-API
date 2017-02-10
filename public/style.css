@@ -66,6 +66,10 @@ li {
     color: red;
 }
 
+#tab-wrapper{
+  display: none;
+}
+
 .info {
 	margin: 65px auto 0;
 	color: #bfbfbf;

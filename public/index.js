@@ -8,7 +8,12 @@ function read() {
   $.get("/read", function (data) {
     allTodos = data
     console.log(allTodos)
-    let result = ''
+    
+  })
+}
+
+function render(todos){
+let result = ''
     for (let i = 0; i < data.length; i++) {
       const id = data[i].id
       const description = data[i].description
@@ -32,20 +37,13 @@ function read() {
                   </div>
                   </li>`
     }
-    //Div append tab wrapper
+    enableDivTabWrapper()
     const itemsLeftCount = getItemsLeftCount(allTodos)
-    const itemsLeft = `<span id="items-left">${itemsLeftCount} items left</span>`
-    const allButton = `<button id="all-button">All</button>`
-    const activeButton = `<button id="active-button">Active</button>`
-    const completedButton = `<button id="completed-button">Completed</button>`
-    const tabWrapper = `${itemsLeft}${allButton}${activeButton}${completedButton}`
     const ulTag = document.getElementById('result')
     ulTag.innerHTML = result
-    const divTabWrapper = document.getElementById('tab-wrapper')
-    divTabWrapper.innerHTML = tabWrapper
-  })
+    const spanItemsLeft = document.getElementById('items-left')
+    spanItemsLeft.innerHTML = `${itemsLeftCount} items left`
 }
-
 function getItemsLeftCount(todos) {
   let itemsLeftCount = 0
   activeTodos = []
@@ -59,6 +57,16 @@ function getItemsLeftCount(todos) {
     }
   }
   return itemsLeftCount
+}
+
+function enableDivTabWrapper() {
+  const divTabWrapper = document.getElementById('tab-wrapper')
+  if (allTodos.length) {
+    divTabWrapper.style.display = 'inline'
+  }
+  else {
+    divTabWrapper.style.display = 'none'
+  }
 }
 
 function strikeThrough(id) {
@@ -144,9 +152,14 @@ $("#writeForm").submit((e) => {
         description: task,
         status: false
       })
+    enableDivTabWrapper()
     const spanItemsLeft = document.getElementById('items-left')
     spanItemsLeft.innerHTML = getItemsLeftCount(allTodos) + ' items left'
   })
+})
+
+$("#all-button").click(function () {
+  read()
 })
 
 $(document).ready(function () {
