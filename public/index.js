@@ -20,21 +20,22 @@ function render(data) {
     const status = data[i].status
 
     let textbox = `<input
+       type="textbox"
        id="text-${id}"
        onblur="updateElement(this.id,this.value)"
        value="${description}"
-      ${status === true ? "style=\"text-decoration:line-through\"" : ""}
+      ${status === true ? "style=\"text-decoration:line-through;color:#d9d9d9\"" : ""}
       readonly="true"
       ondblclick="this.readOnly='';"
       />`
-    let deleteButton = `<button id="button-${id}" onClick="deleteElement(this.id)" class="deleteButton">x</button>`
+    let deleteButton = `<button id="button-${id}" onClick="deleteElement(this.id)" class="deleteButton"></button>`
     result += `<li id="list-${id}">
                   <div id="div-${id}">
                   <input onclick="updateStatus(this.id)
-                  " id = "check-${id}" type="checkbox" ${status === true ? "checked" : ''}> 
+                  " class="toggle" id="check-${id}" type="checkbox" ${status === true ? "checked" : ''}> 
                   ${textbox}
                   ${deleteButton}
-                  </div>
+                  </div> 
                   </li>`
   }
   enableDivTabWrapper()
@@ -63,7 +64,7 @@ function getItemsLeftCount(todos) {
 function enableDivTabWrapper() {
   const divTabWrapper = document.getElementById('tab-wrapper')
   if (allTodos.length) {
-    divTabWrapper.style.display = 'inline'
+    divTabWrapper.style.display = 'flex'
   } else {
     divTabWrapper.style.display = 'none'
   }
@@ -77,10 +78,12 @@ function strikeThrough(id) {
   const checkElement = document.getElementById(checkId)
   let status
   if (checkElement.checked) {
-    textElement.style.textDecoration = "line-through";
+    textElement.style.textDecoration = "line-through"
+    textElement.style.color = "#d9d9d9"
     status = true
   } else {
-    textElement.style.textDecoration = "none";
+    textElement.style.textDecoration = "none"
+    textElement.style.color = 'black'
     status = false
   }
   return status
@@ -133,28 +136,45 @@ function deleteElement(id) {
 $("#writeForm").submit(function (e) {
   e.preventDefault();
   let task = $('#post-data').val()
-  let submitButton = document.getElementById('post-data');
+  let submitButton = document.getElementById('post-data')
   submitButton.value = ''
   $.post(`/write/${task}`, function (data) {
-    const id = data.id
-    let taskData = `<li id="list-${id}">
-                  <div id="div-${id}">
-                  <input onclick="updateStatus(this.id,true)
-                  " id="check-${id}" type="checkbox"}> 
-                  <input id="text-${id}" onblur="updateElement(this.id,this.value)" value="${task}"/>
-                  <button id="button-${id}" onClick="deleteElement(this.id)" class = "deleteButton">x</button> 
-                  </div>
-                  </li>`
-    $("#result").append(taskData)
     allTodos.push(
       {
         id: data.id,
         description: task,
         status: false
       })
+    render(allTodos)
+
     enableDivTabWrapper()
     const spanItemsLeft = document.getElementById('items-left')
     spanItemsLeft.innerHTML = getItemsLeftCount(allTodos) + ' items left'
+  })
+})
+
+$("#toggle-all").click(function () {
+  let status = document.getElementById('toggle-all').checked
+  $.ajax({
+    data: `status=${status}`,
+    url: `/update/`,
+    type: 'PUT',
+    success: function () {
+      allTodos.forEach((element) => {
+        element.status = status
+      })
+      render(allTodos)
+    }
+  })
+})
+
+$("#clear-completed-button").click(function () {
+  $.ajax({
+    url: `/destroy/`,
+    type: 'DELETE',
+    success: function (response) {
+      read()
+    }
   })
 })
 

@@ -42,9 +42,31 @@ app.put('/update/:linenumber', function (req, res) {
     })
 })
 
+app.put('/update/', function (req, res) {
+  const status = req.body.status
+  crudops.updateDBAll(status)
+    .then(function () {
+      res.sendStatus(200)
+    })
+    .catch(function () {
+      res.sendStatus(500)
+    })
+})
+
 app.delete('/destroy/:linenumber', function (req, res) {
   const id = req.params.linenumber
   crudops.deleteFromDB(id)
+    .then(function () {
+      res.sendStatus(200)
+    })
+    .catch(function () {
+      res.sendStatus(500)
+    })
+})
+
+app.delete('/destroy/', function (req, res) {
+  const id = req.params.linenumber
+  crudops.deleteSelectedFromDB(id)
     .then(function () {
       res.sendStatus(200)
     })

@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize('postgres://anujshankar:t7@localhost:5432/anujshankar')
 
-function readFromDB () {
-  return sequelize.query(`SELECT id,description,status FROM tasks ORDER BY id`)
+function readFromDB() {
+  return sequelize.query(`SELECT id,description,status FROM tasks ORDER BY id;`)
 }
 
-function insertInDB (insertString) {
+function insertInDB(insertString) {
   return sequelize.query(`INSERT INTO TASKS (DESCRIPTION)
-   VALUES(?) RETURNING ID`, { replacements: [insertString] })
+   VALUES(?) RETURNING ID;`, { replacements: [insertString] })
 }
 
-function updateDB (id, description, status = false) {
+function updateDB(id, description, status = false) {
   if (!description) {
     return sequelize.query('UPDATE tasks SET STATUS = ? WHERE id = ?;', { replacements: [status, id] })
   } else {
@@ -18,13 +18,23 @@ function updateDB (id, description, status = false) {
   }
 }
 
-function deleteFromDB (id) {
+function updateDBAll(status) {
+  return sequelize.query('UPDATE tasks SET STATUS = ?;', { replacements: [status] })
+}
+
+function deleteFromDB(id) {
   return sequelize.query('DELETE FROM tasks WHERE ID = ?;', { replacements: [id] })
+}
+
+function deleteSelectedFromDB() {
+  return sequelize.query('DELETE FROM tasks WHERE status=TRUE;')
 }
 
 module.exports = {
   readFromDB,
   insertInDB,
   updateDB,
-  deleteFromDB
+  updateDBAll,
+  deleteFromDB,
+  deleteSelectedFromDB
 }
