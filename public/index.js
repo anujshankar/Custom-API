@@ -26,7 +26,7 @@ function render(data) {
        value="${description}"
       ${status === true ? "style=\"text-decoration:line-through;color:#d9d9d9\"" : ""}
       readonly="true"
-      ondblclick="this.readOnly='';"
+      ondblclick="updateTextbox(this.id);"
       />`
     let deleteButton = `<button id="button-${id}" onClick="deleteElement(this.id)" class="deleteButton"></button>`
     result += `<li id="list-${id}">
@@ -44,6 +44,12 @@ function render(data) {
   ulTag.innerHTML = result
   const spanItemsLeft = document.getElementById('items-left')
   spanItemsLeft.innerHTML = `${itemsLeftCount} items left`
+}
+
+function updateTextbox(textboxId){
+  var newTextBox = document.getElementById(textboxId)
+  newTextBox.readOnly = false;
+  newTextBox.classList.add('new-textbox')
 }
 
 function getItemsLeftCount(todos) {
@@ -114,7 +120,8 @@ function updateElement(id, value) {
   const queryId = id.split('-')[1]
   const textboxId = 'text-' + queryId
   const textElement = document.getElementById(textboxId)
-  textElement.readOnly = true;
+  textElement.readOnly = true
+  textElement.classList.remove('new-textbox')
   $.ajax({
     data: `value=${value}`,
     url: `/update/${queryId}`,
