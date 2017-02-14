@@ -1,12 +1,12 @@
 $(document).ready(function () {
+  location.hash = '#/'
   read()
 })
 
 function read() {
   $.get('/read', function (data) {
     allTodos = data
-    render(allTodos)
-    setSelectedFilter('all')
+    renderWithFilter()
   })
 }
 
@@ -18,7 +18,7 @@ $('#writeForm').submit(function (e) {
   submitButton.value = ''
   $.post(`/write/${task}`, function (data) {
     allTodos.push({ id: data.id, description: task, status: false })
-    render(allTodos)
+    renderWithFilter()
   })
 })
 
@@ -36,7 +36,7 @@ function updateStatus(id) {
           break
         }
       }
-      render(allTodos)
+      renderWithFilter()
     }
   })
 }
@@ -59,7 +59,7 @@ function updateElement(id, value) {
           break
         }
       }
-      render(allTodos)
+      renderWithFilter()
     }
   })
 }
@@ -77,8 +77,8 @@ function deleteElement(id) {
           break
         }
       }
-      allTodos.splice(indexToRemove,1)
-      render(allTodos)
+      allTodos.splice(indexToRemove, 1)
+      renderWithFilter()
     }
   })
 }
@@ -93,7 +93,7 @@ $('#toggle-all').click(function () {
       allTodos.forEach((element) => {
         element.status = status
       })
-      render(allTodos)
+      renderWithFilter()
     }
   })
 })
@@ -102,21 +102,23 @@ $('#clear-completed-button').click(function () {
   $.ajax({
     url: `/destroy/`,
     type: 'DELETE',
-    success: () => { read() }
+    success: () => { 
+      read()
+    }
   })
 })
 
 $('#all-button').click(function () {
-  render(allTodos)
-  setSelectedFilter('all')
+  location.hash = '#/'
+  renderWithFilter()
 })
 
 $('#active-button').click(function () {
-  render(activeTodos)
-  setSelectedFilter('active')
+  location.hash = '#/active'
+  renderWithFilter()
 })
 
 $('#completed-button').click(function () {
-  render(completedTodos)
-  setSelectedFilter('completed')
+  location.hash = '#/completed'
+  renderWithFilter()
 })

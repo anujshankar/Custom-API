@@ -1,6 +1,7 @@
 let allTodos = []
 let activeTodos = []
 let completedTodos = []
+let state
 
 const entityMap = {
   '&': '&amp;',
@@ -19,7 +20,7 @@ function escapeHtml(string) {
   })
 }
 
-function render(data) {
+function render(data, itemsLeftCount) {
   let result = ''
   for (let i = 0; i < data.length; i++) {
     const id = data[i].id
@@ -50,7 +51,6 @@ function render(data) {
                   </div> 
               </li>`
   }
-  const itemsLeftCount = getItemsLeftCount(allTodos)
   enableDivTabWrapper()
   updateCompletedButton()
   checkAllStatus(itemsLeftCount)
@@ -182,4 +182,23 @@ function setSelectedFilter(currentFilter) {
       activeButton.setAttribute('class', 'selected')
       break
   }
+}
+
+function getTodoArrayToRender() {
+  const currentFilter = location.hash
+  switch (currentFilter) {
+    case '#/':
+      return [allTodos, 'all']
+    case '#/active':
+      return [activeTodos, 'active']
+    case '#/completed':
+      return [completedTodos, 'completed']
+  }
+}
+
+function renderWithFilter() {
+  const itemsLeftCount = getItemsLeftCount(allTodos)
+  const todo = getTodoArrayToRender()
+  render(todo[0], itemsLeftCount)
+  setSelectedFilter(todo[1])
 }
