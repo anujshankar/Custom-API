@@ -73,12 +73,15 @@ function updateSpanItemsLeft(itemsLeftCount) {
 }
 
 function modifyTextBoxView(textboxId, check) {
+  const checkboxId = 'check-' + textboxId.split('-')[1]
   const textElement = document.getElementById(textboxId)
+  const checkbox = document.getElementById(checkboxId)
   textElement.readOnly = check
   textElement.style.borderStyle = (check) ? 'none' : 'solid'
   textElement.style.borderWidth = (check) ? '0px' : '1px'
   textElement.style.borderColor = 'black'
   textElement.style.width = (check) ? '400px' : '500px'
+  checkbox.style.visibility = (check) ? 'visible' : 'hidden'
   if (check) textElement.parentElement.setAttribute('class', 'list-div')
   else textElement.parentElement.setAttribute('class', 'no-hover')
 }
