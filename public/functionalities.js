@@ -5,7 +5,6 @@ $(document).ready(function () {
 function read() {
   $.get('/read', function (data) {
     allTodos = data
-    console.log(allTodos)
     render(allTodos)
     setSelectedFilter('all')
   })

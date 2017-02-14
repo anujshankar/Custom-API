@@ -14,13 +14,14 @@ function render(data) {
                     value="${description}"
                     ${status === true ? 'style="text-decoration:line-through;color:#d9d9d9"' : ''}
                     readonly="true"
-                    ondblclick="modifyTextBoxView(this.id,false);"
+                    ondblclick="modifyTextBoxView(this.id,false)"
+                    onkeyup="updateWhenEnterPressed(event,this.id,this.value)"
                     />`
 
     let deleteButton = `<button id="button-${id}"
                           onClick="deleteElement(this.id)" class="deleteButton">
                         </button>`
-    
+
     let checkbox = `<input onclick="updateStatus(this.id)
                       " class="toggle" id="check-${id}" type="checkbox" ${status === true ? 'checked' : ''}>`
 
@@ -37,6 +38,13 @@ function render(data) {
   updateCompletedButton()
   $('#result').html(result)
   updateSpanItemsLeft(itemsLeftCount)
+}
+
+function updateWhenEnterPressed(event,id,value) {
+  if (event.keyCode === 13) {
+    updateElement(id, value)
+  }
+
 }
 
 function updateSpanItemsLeft(itemsLeftCount) {
