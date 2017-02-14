@@ -11,6 +11,10 @@ app.get('/', function (req, res) {
   res.render('../public/index')
 })
 
+app.get('/test', function (req, res) {
+  res.render('../public/test/indexTest')
+})
+
 app.get('/read', function (req, res) {
   crudops.readFromDB().then(function (data) {
     res.send(data[0])

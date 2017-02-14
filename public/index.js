@@ -13,7 +13,7 @@ const entityMap = {
   '=': '&#x3D;'
 }
 
-function escapeHtml (string) {
+function escapeHtml(string) {
   return String(string).replace(/[&<>"'`=\/]/g, function (s) {
     return entityMap[s]
   })
@@ -53,11 +53,20 @@ function render(data) {
   const itemsLeftCount = getItemsLeftCount(allTodos)
   enableDivTabWrapper()
   updateCompletedButton()
+  checkAllStatus(itemsLeftCount)
   $('#result').html(result)
   updateSpanItemsLeft(itemsLeftCount)
 }
 
-function updateWhenEnterPressed(event,id,value) {
+function checkAllStatus(itemsLeftCount) {
+  if (itemsLeftCount === 0 && allTodos.length !== 0) {
+    document.getElementById('toggle-all').checked = true
+  } else{
+    document.getElementById('toggle-all').checked = false
+  }
+}
+
+function updateWhenEnterPressed(event, id, value) {
   if (event.keyCode === 13) {
     updateElement(id, value)
   }
