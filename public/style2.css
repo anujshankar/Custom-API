@@ -138,7 +138,7 @@ li .deletebutton:after {
 }
 
 .filters{
-   height: 58px;
+   height: 48px;
    font-size: 14px;
    border-top: solid 1px #e6e6e6;
    background-color: #fff;
@@ -160,13 +160,14 @@ input:focus{
 .filters button {
 	outline:none;
 	color: inherit;
-	margin-top:10px;
+	margin-top:11px;
+	margin-left: 10px;
 	text-decoration: none;
 	border: 1px solid transparent;
 	border-radius: 3px;
 	font-weight:300;
 	font-size:14px;
-	height: 35px;
+	height: 25px;
 	background-color: #fff;
 }
 
@@ -183,7 +184,7 @@ input:focus{
 }
 
 #items-left{
-	margin: 20px;
+	margin: 15px;
 	font-weight: 300;
 }
 
@@ -193,7 +194,7 @@ input:focus{
 
 #clear-completed-button{
 	margin-left: 70px;
-	margin-top: 19px;
+	margin-top: 14px;
 	font-weight: 300;
 }
 

@@ -4,7 +4,7 @@ let allTodos = []
 let activeTodos = []
 let completedTodos = []
 
-function read () {
+function read() {
   $.get('/read', function (data) {
     allTodos = data
     console.log(allTodos)
@@ -13,7 +13,7 @@ function read () {
   })
 }
 
-function render (data) {
+function render(data) {
   let result = ''
   for (let i = 0; i < data.length; i++) {
     const id = data[i].id
@@ -48,7 +48,7 @@ function render (data) {
   spanItemsLeft.innerHTML = `${itemsLeftCount} items left`
 }
 
-function modifyTextBoxView (textboxId, check) {
+function modifyTextBoxView(textboxId, check) {
   const textElement = document.getElementById(textboxId)
   textElement.readOnly = check
   textElement.style.borderStyle = (check) ? 'none' : 'solid'
@@ -59,7 +59,7 @@ function modifyTextBoxView (textboxId, check) {
   else textElement.parentElement.setAttribute('class', 'no-hover')
 }
 
-function getItemsLeftCount (todos) {
+function getItemsLeftCount(todos) {
   let itemsLeftCount = 0
   activeTodos = []
   completedTodos = []
@@ -74,7 +74,7 @@ function getItemsLeftCount (todos) {
   return itemsLeftCount
 }
 
-function enableDivTabWrapper () {
+function enableDivTabWrapper() {
   const divTabWrapper = document.getElementById('tab-wrapper')
   if (allTodos.length) {
     divTabWrapper.style.display = 'flex'
@@ -83,7 +83,7 @@ function enableDivTabWrapper () {
   }
 }
 
-function strikeThrough (id) {
+function strikeThrough(id) {
   const queryId = id.split('-')[1]
   const textboxId = 'text-' + queryId
   const checkId = 'check-' + queryId
@@ -102,7 +102,7 @@ function strikeThrough (id) {
   return status
 }
 
-function updateStatus (id) {
+function updateStatus(id) {
   const queryId = id.split('-')[1]
   const status = strikeThrough(id)
 
@@ -124,7 +124,7 @@ function updateStatus (id) {
   })
 }
 
-function updateCompletedButton () {
+function updateCompletedButton() {
   const clearButton = document.getElementById('clear-completed-button')
   if (completedTodos.length > 0) {
     clearButton.style.display = 'block'
@@ -133,22 +133,22 @@ function updateCompletedButton () {
   }
 }
 
-function setSelectedFilter (currentFilter) {
+function setSelectedFilter(currentFilter) {
   const allButton = document.getElementById('all-button')
   const completedButton = document.getElementById('completed-button')
   const activeButton = document.getElementById('active-button')
   switch (currentFilter) {
-    case 'all' :
+    case 'all':
       allButton.setAttribute('class', 'selected')
       completedButton.setAttribute('class', '')
       activeButton.setAttribute('class', '')
       break
-    case 'completed' :
+    case 'completed':
       allButton.setAttribute('class', '')
       completedButton.setAttribute('class', 'selected')
       activeButton.setAttribute('class', '')
       break
-    case 'active' :
+    case 'active':
       allButton.setAttribute('class', '')
       completedButton.setAttribute('class', '')
       activeButton.setAttribute('class', 'selected')
@@ -156,7 +156,7 @@ function setSelectedFilter (currentFilter) {
   }
 }
 
-function updateElement (id, value) {
+function updateElement(id, value) {
   const queryId = id.split('-')[1]
   const textboxId = 'text-' + queryId
   const textElement = document.getElementById(textboxId)
@@ -169,7 +169,7 @@ function updateElement (id, value) {
   })
 }
 
-function deleteElement (id) {
+function deleteElement(id) {
   const queryId = id.split('-')[1]
   $.ajax({
     url: `/destroy/${queryId}`,
