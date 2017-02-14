@@ -61,7 +61,6 @@ function updateWhenEnterPressed(event,id,value) {
   if (event.keyCode === 13) {
     updateElement(id, value)
   }
-
 }
 
 function updateSpanItemsLeft(itemsLeftCount) {
@@ -101,10 +100,13 @@ function getItemsLeftCount(todos) {
 
 function enableDivTabWrapper() {
   const divTabWrapper = document.getElementById('tab-wrapper')
+  const checkAll = document.getElementById('toggle-all')
   if (allTodos.length) {
     divTabWrapper.style.display = 'flex'
+    checkAll.style.visibility = 'visible'
   } else {
     divTabWrapper.style.display = 'none'
+    checkAll.style.visibility = 'hidden'
   }
 }
 
