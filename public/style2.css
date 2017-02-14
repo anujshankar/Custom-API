@@ -20,7 +20,6 @@ h1{
 .todoapp{
 	width:550px;
 	margin:auto;
-/* 	background-color: #fff; */
 }
 
 form{
@@ -133,7 +132,6 @@ li .deletebutton {
 	color: #af5b5e;
 }
 
-
 li .deletebutton:after {
 	content: '×';
 }
@@ -151,13 +149,7 @@ li .deletebutton:after {
 	           0 9px 20px 0px rgba(85, 85, 85, 0.16),
 	            0 17px 2px -6px rgba(0, 0, 0, 0.2);
 }
- 
-.hidden{
-  display: none;
-}
-input:focus{
-	outline: none;
-}
+
 .filters button {
 	outline:none;
 	color: inherit;
@@ -179,6 +171,14 @@ input:focus{
 .filters button.selected {
 	border-color: rgba(175, 47, 47, 0.2);
 }
+ 
+.hidden{
+  display: none;
+}
+
+input:focus{
+	outline: none;
+}
 
 #all-button{
 	margin-left: 50px;
@@ -197,11 +197,6 @@ input:focus{
 	margin-left: 70px;
 	margin-top: 14px;
 	font-weight: 300;
-}
-
-.new-textbox{
-	width: 600px !important;
-	border: solid black !important; 
 }
 
 .info {

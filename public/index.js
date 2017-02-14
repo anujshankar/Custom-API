@@ -20,11 +20,13 @@ function render(data) {
     let deleteButton = `<button id="button-${id}"
                           onClick="deleteElement(this.id)" class="deleteButton">
                         </button>`
+    
+    let checkbox = `<input onclick="updateStatus(this.id)
+                      " class="toggle" id="check-${id}" type="checkbox" ${status === true ? 'checked' : ''}>`
 
     result += `<li id="list-${id}">
                   <div id="div-${id}" class="list-div">
-                      <input onclick="updateStatus(this.id)
-                      " class="toggle" id="check-${id}" type="checkbox" ${status === true ? 'checked' : ''}> 
+                      ${checkbox}
                       ${textbox}
                       ${deleteButton}
                   </div> 
