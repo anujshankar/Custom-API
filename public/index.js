@@ -1,7 +1,6 @@
 let allTodos = []
 let activeTodos = []
 let completedTodos = []
-let state
 
 const entityMap = {
   '&': '&amp;',
