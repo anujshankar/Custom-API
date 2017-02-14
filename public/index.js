@@ -61,7 +61,7 @@ function render(data) {
 function checkAllStatus(itemsLeftCount) {
   if (itemsLeftCount === 0 && allTodos.length !== 0) {
     document.getElementById('toggle-all').checked = true
-  } else{
+  } else {
     document.getElementById('toggle-all').checked = false
   }
 }
@@ -69,6 +69,17 @@ function checkAllStatus(itemsLeftCount) {
 function updateWhenEnterPressed(event, id, value) {
   if (event.keyCode === 13) {
     updateElement(id, value)
+  } else if (event.keyCode === 27) {
+    const queryId = id.split('-')[1]
+    let description
+    for (let i = 0; i < allTodos.length; i++) {
+      if (allTodos[i].id === Number(queryId)) {
+        description = allTodos[i].description
+        break
+      }
+    }
+    document.getElementById(id).value = description
+    modifyTextBoxView(id, true)
   }
 }
 

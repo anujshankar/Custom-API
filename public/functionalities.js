@@ -70,7 +70,15 @@ function deleteElement(id) {
     url: `/destroy/${queryId}`,
     type: 'DELETE',
     success: function (response) {
-      read()
+      let indexToRemove;
+      for (let i = 0; i < allTodos.length; i++) {
+        if (allTodos[i].id === Number(queryId)) {
+          indexToRemove = i
+          break
+        }
+      }
+      allTodos.splice(indexToRemove,1)
+      render(allTodos)
     }
   })
 }

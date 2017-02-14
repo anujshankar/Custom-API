@@ -107,6 +107,9 @@ li div input[type="textbox"]{
 	font-weight: 300;
 	width: 400px;
 	border: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  overflow: hidden;
 }
 
 li .deletebutton {
