@@ -13,6 +13,7 @@ function read() {
 $('#writeForm').submit(function (e) {
   e.preventDefault()
   let task = $('#post-data').val()
+  task = escapeHtml(task)
   let submitButton = document.getElementById('post-data')
   submitButton.value = ''
   $.post(`/write/${task}`, function (data) {
@@ -46,6 +47,7 @@ function updateElement(id, value) {
   const textElement = document.getElementById(textboxId)
   textElement.readOnly = true
   modifyTextBoxView(textboxId, true)
+  value = escapeHtml(value)
   $.ajax({
     data: `value=${value}`,
     url: `/update/${queryId}`,

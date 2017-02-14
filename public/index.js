@@ -2,6 +2,23 @@ let allTodos = []
 let activeTodos = []
 let completedTodos = []
 
+const entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+}
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s]
+  })
+}
+
 function render(data) {
   let result = ''
   for (let i = 0; i < data.length; i++) {
