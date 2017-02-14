@@ -33,6 +33,7 @@ function render(data, itemsLeftCount) {
                     readonly="true"
                     ondblclick="modifyTextBoxView(this.id,false)"
                     onkeyup="updateWhenEnterPressed(event,this.id,this.value)"
+                    title="${description}"
                     />`
 
     let deleteButton = `<button id="button-${id}"
