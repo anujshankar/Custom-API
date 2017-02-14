@@ -122,6 +122,7 @@ li .deletebutton {
 	background-color: #fff;
 	margin-left: 40px;
 	margin-top: 5px;
+	outline: none;
 }
 
 .list-div:hover .deletebutton {
@@ -218,4 +219,13 @@ input:focus{
 
 .info a:hover {
 	text-decoration: underline;
+}
+
+@media (max-width: 430px) {
+	.filters {
+		height: 50px;
+	}
+	.filter button{
+		bottom: 10px;
+	}
 }
