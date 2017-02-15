@@ -17,3 +17,8 @@
 // crudops.deleteFromDB(1).then(function (data) {
 //   console.log(data)
 // })
+
+// let data3 = []
+// crudops.insertInDB(data3).then(function (data) {
+//   console.log(data)
+// })
